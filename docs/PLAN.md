@@ -3,12 +3,14 @@
 > Document viu. Deciziile importante au ADR în `docs/adr/`. Ultima actualizare: 2026-09-24.
 
 ## Context
+
 Site de prezentare static, RO + EN, pentru Ramona Nichifor (autor, ilustrator, antreprenor, consilier pentru
 dezvoltare personală). Buget fix pe pagini. Nu există coș; cumpărarea se face extern (Amazon, eMAG, WhatsApp).
 Arhitectura trebuie să permită mai târziu Shopify, pagini de produs, CMS, limbi noi (inclusiv RTL) și universuri noi
 **fără rescriere**. Obiectiv SEO minim: site-ul apare la căutarea „Ramona Nichifor”.
 
 **Decizii de la clarificări (2026-09-24):**
+
 1. Cuvintele accentuate din hero se scriu cu Cormorant Garamond Italic; Italianno nu se folosește.
 2. Fluturele se decupează deocamdată de pe copertă; varianta PNG transparentă și acuarela mare se cer Ramonei.
 3. Titlurile și slug-urile EN sunt traduceri de lucru, de confirmat; textul EN e draft, revizuit de Ramona.
@@ -26,6 +28,7 @@ Arhitectura trebuie să permită mai târziu Shopify, pagini de produs, CMS, lim
 ---
 
 ## 1. Scop și non-scop
+
 **Scop (lansare):** 7 pagini unice (Acasă, Despre mine, Universuri, Artă, Produse, Contact, 404) + 2 șabloane
 (Univers ×4, Cărți pe public ×3), complete în RO și EN; header fix centrat cu dropdown-uri generate din date; SEO complet;
 WCAG 2.2 AA; Lighthouse mobil ≥ 90; deploy pe Cloudflare Pages.
@@ -34,22 +37,23 @@ WCAG 2.2 AA; Lighthouse mobil ≥ 90; deploy pe Cloudflare Pages.
 Toate sunt pregătite arhitectural (secțiunea 12), dar nu se construiesc.
 
 ## 2. Harta site-ului și rute
+
 Toate căile au slash final (`trailingSlash: true`), ca să fie servite simplu de orice host static (`/ro/arta/index.html`).
 
-| Cheie rută | RO | EN |
-|---|---|---|
-| `home` | `/ro/` | `/en/` |
-| `about` | `/ro/despre-mine/` (#consilier #autor #artist #antreprenor) | `/en/about/` (#counselor #author #artist #entrepreneur) |
-| `universes` | `/ro/universuri/` | `/en/universes/` |
-| `universe` | `/ro/universuri/{slug.ro}/` | `/en/universes/{slug.en}/` |
-| `booksByAudience` | `/ro/carti/{copii\|adolescenti\|adulti}/` | `/en/books/{kids\|teens\|adults}/` |
-| `art` | `/ro/arta/` (#originale #printuri → tab activ) | `/en/art/` (#originals #prints) |
-| `products` | `/ro/produse/` (filtre în query: `?univers=&tip=&status=`) | `/en/products/` |
-| `contact` | `/ro/contact/` | `/en/contact/` |
-| `privacy` | `/ro/confidentialitate/` | `/en/privacy/` |
-| 404 | `/404.html`, bilingv | — |
-| *viitor* `counseling` | `/ro/consiliere/` | `/en/counseling/` |
-| *viitor* `product` | `/ro/produse/{slug.ro}/` | `/en/products/{slug.en}/` |
+| Cheie rută            | RO                                                          | EN                                                       |
+| --------------------- | ----------------------------------------------------------- | -------------------------------------------------------- |
+| `home`                | `/ro/`                                                      | `/en/`                                                   |
+| `about`               | `/ro/despre-mine/` (#consilier #autor #artist #antreprenor) | `/en/about/` (#counsellor #author #artist #entrepreneur) |
+| `universes`           | `/ro/universuri/`                                           | `/en/universes/`                                         |
+| `universe`            | `/ro/universuri/{slug.ro}/`                                 | `/en/universes/{slug.en}/`                               |
+| `booksByAudience`     | `/ro/carti/{copii\|adolescenti\|adulti}/`                   | `/en/books/{kids\|teens\|adults}/`                       |
+| `art`                 | `/ro/arta/` (#originale #printuri → tab activ)              | `/en/art/` (#originals #prints)                          |
+| `products`            | `/ro/produse/` (filtre în query: `?univers=&tip=&status=`)  | `/en/products/`                                          |
+| `contact`             | `/ro/contact/`                                              | `/en/contact/`                                           |
+| `privacy`             | `/ro/confidentialitate/`                                    | `/en/privacy/`                                           |
+| 404                   | `/404.html`, bilingv                                        | —                                                        |
+| _viitor_ `counseling` | `/ro/consiliere/`                                           | `/en/counseling/`                                        |
+| _viitor_ `product`    | `/ro/produse/{slug.ro}/`                                    | `/en/products/{slug.en}/`                                |
 
 Slug-uri de univers. Cele RO sunt fără diacritice; cele EN sunt **traduceri de lucru**, de confirmat:
 `fluturele-dansator-de-step` / `the-tap-dancing-butterfly`, `buburuza-rotunjoara` / `roundy-the-ladybug`,
@@ -60,6 +64,7 @@ Slug-uri de univers. Cele RO sunt fără diacritice; cele EN sunt **traduceri de
 - **hreflang:** fiecare pagină declară `ro`, `en` și `x-default` (→ varianta RO), plus canonical la propria versiune. Sursa acestor valori este registrul de rute (secțiunea 5), deci sunt mereu sincronizate cu sitemap-ul și cu comutatorul de limbă.
 
 ## 3. Modelul de conținut
+
 Tipurile TypeScript se deduc din scheme Zod (`z.infer`), deci există o singură sursă de adevăr. Validarea rulează la build: dacă datele sunt greșite, build-ul eșuează cu un mesaj clar.
 ID-urile sunt în engleză, stabile și independente de limbă (`butterfly`, `book-butterfly`). Slug-urile sunt localizate și se pot schimba fără să rupă referințele.
 
@@ -103,23 +108,25 @@ SiteConfig { baseUrl; defaultLocale; locales; header: { showName: boolean } }
 ```
 
 **De ce `Artwork` e separat de `Product` (ADR 0004):**
-- *Lucrarea* (titlu, tehnică, dimensiuni, imagine) e un lucru; *ce se vinde* e altceva. Un original poate avea mai multe printuri. O lucrare poate fi doar în portofoliu.
+
+- _Lucrarea_ (titlu, tehnică, dimensiuni, imagine) e un lucru; _ce se vinde_ e altceva. Un original poate avea mai multe printuri. O lucrare poate fi doar în portofoliu.
 - Pagina Artă afișează lucrări. Pagina Produse și Shopify, mai târziu, lucrează cu produse, deci maparea e 1:1.
 - Costul e mic: un câmp `artworkId` pe produs.
 
 **Reguli pentru butoanele de cumpărare, în funcție de status:**
 
-| Status | Ce se afișează |
-|---|---|
-| `available` | butoanele magazinelor care au URL și se potrivesc limbii |
-| `made_to_order` | „Comandă prin mesaj” pe WhatsApp |
-| `coming_soon` | eticheta „În curând”, fără butoane |
-| `sold` | „Vândut”, cu opțiunea „Întreabă de lucrări similare” |
-| `portfolio_only` | nimic |
+| Status           | Ce se afișează                                           |
+| ---------------- | -------------------------------------------------------- |
+| `available`      | butoanele magazinelor care au URL și se potrivesc limbii |
+| `made_to_order`  | „Comandă prin mesaj” pe WhatsApp                         |
+| `coming_soon`    | eticheta „În curând”, fără butoane                       |
+| `sold`           | „Vândut”, cu opțiunea „Întreabă de lucrări similare”     |
+| `portfolio_only` | nimic                                                    |
 
 Un link care lipsește nu blochează build-ul. Butonul pur și simplu nu apare, iar `npm run content:check` listează ce lipsește.
 
 ## 4. Stratul de date
+
 - `src/lib/data/index.ts` este **interfața publică**. E singurul loc din care componentele iau date. Toate funcțiile sunt `async`, ca un CMS sau Shopify să poată intra fără modificări în componente:
   `getProfile(l)`, `getSeries(l)`, `getUniverses(l)`, `getUniverse(slug, l)`, `getUniverseById(id, l)`,
   `getBooksByAudience(a, l)`, `getProducts(filter, l)`, `getArtworks(filter, l)`, `getNavigation(l)`, `getSiteConfig()`.
@@ -128,6 +135,7 @@ Un link care lipsește nu blochează build-ul. Butonul pur și simplu nu apare, 
 - Regulă ESLint (`no-restricted-imports`): `content/**` se poate importa doar din `src/lib/data/local/**`.
 
 ## 5. i18n cu export static
+
 - **next-intl** doar pentru textele de interfață: `messages/ro.json` și `messages/en.json`, cu formatare ICU (plural, dată), în mod static prin `setRequestLocale`. Nu folosim middleware și nici `pathnames`, pentru că la export static next-intl nu suportă căi traduse.
 - **Registru de rute propriu:** `src/lib/routing/routes.ts`. Fiecare cheie de rută are segmente per limbă. Din el vin:
   - `href(key, params, locale)`, pentru toate linkurile;
@@ -140,74 +148,82 @@ Un link care lipsește nu blochează build-ul. Butonul pur și simplu nu apare, 
 - **Comutatorul de limbă** duce la **aceeași pagină** în cealaltă limbă, folosind `alternates` și păstrând ancora.
 
 ## 6. Design system
+
 - **Tailwind CSS v4.** Token-urile stau în `src/styles/theme.css` (`@theme`). Utilitarele sunt standard, bine documentate și nu mai cer fișier de config. Alternativa, CSS Modules, e mai verbose, fără câștig real (ADR 0006).
 - **Culori:**
 
-  | Token | Valoare | Folosire |
-  |---|---|---|
-  | `ink` | `#40345e` | text |
-  | `lavender` | `#8174aa` | decor și text mare |
+  | Token             | Valoare   | Folosire                 |
+  | ----------------- | --------- | ------------------------ |
+  | `ink`             | `#40345e` | text                     |
+  | `lavender`        | `#8174aa` | decor și text mare       |
   | `lavender-strong` | `#5f5090` | butoane cu text alb (AA) |
-  | `muted` | `#655d77` | text secundar |
-  | `paper` | `#ffffff` | fundal |
-  | `mist` | `#f8f6fc` | fundal pal |
-  | `blush` | `#f5f0fa` | fundal pal |
+  | `muted`           | `#655d77` | text secundar            |
+  | `paper`           | `#ffffff` | fundal                   |
+  | `mist`            | `#f8f6fc` | fundal pal               |
+  | `blush`           | `#f5f0fa` | fundal pal               |
 
   Lavanda `#8174aa` pe alb are contrast de aproximativ 4,1:1, deci nu se folosește pentru text mic.
+
 - **Fonturi** prin `next/font/google`, găzduite local, cu subseturile `latin` și `latin-ext` (necesare pentru ș, ț, ă, î, â):
   - Cormorant Garamond 400/500/600 și **italic** (cuvintele accentuate din hero);
   - DM Sans 400/500/600.
 
   Italianno nu se încarcă.
+
 - **Scară tipografică fluidă:** `clamp()` pentru display, h1–h3, body, small. Spațiere pe o scară de 4 px. Raze: `sm`, `md`, `pill`. Două umbre soft.
 - **Accent per univers:** `style={{'--accent': universe.accentColor}}` pe `<main>`. Componentele folosesc `var(--accent)`.
   Culori propuse (de confirmat cu Ramona): Fluturele `#b27bb8`, Buburuza `#d9826f`, Țânțarul `#5f9aa8`, Musca `#8aa383`. Folosite ca text, se verifică pentru AA.
 - **Atmosfera:** acuarela ca fundal decorativ (`aria-hidden`, mască CSS), la dreapta, mai mică decât în mockup. Fluturele e un element separat, decupat deocamdată de pe copertă. `prefers-reduced-motion` e respectat.
 
 ## 7. Componente
-| Componentă | Props principale | Responsabilitate |
-|---|---|---|
-| `SiteHeader` | `nav, locale, showName` | Header fix centrat. La scroll devine bară subțire (IntersectionObserver pe o santinelă, fără listener de scroll). |
-| `NavDropdown` | `item` | Pattern „disclosure”: buton cu `aria-expanded` și `aria-controls`. Se închide la Esc (focus înapoi pe buton), la click în afară și la ieșirea focusului. |
-| `MobileMenu` | `nav` | Hamburger, panou cu acordeoane, focus reținut în panou cât e deschis, scroll-ul paginii blocat. |
-| `LanguageSwitcher` | `alternates, current` | Linkuri `hreflang` către aceeași pagină. |
-| `SiteFooter` | `nav, social, legal` | Nume, linkuri, Instagram, Facebook, ©, limbă, bloc legal. |
-| `Hero` | `profile.hero, photo` | Nume, roluri, rânduri cu italic, CTA, foto cu margini estompate. |
-| `HeroShortcuts` | `items[4]` | Cele 4 scurtături cu iconițe SVG inline. |
-| `Section` | `id, eyebrow, title, tone` | Container de secțiune cu titlu semantic. |
-| `UniverseCard` | `universe` | Copertă sau placeholder, titlu, tagline, badge „în curând”, accent. |
-| `BookCover` | `cover?, title` | Coperta sau placeholder-ul „Copertă în curând”. |
-| `BookDetails` | `book` | An, ISBN, număr în serie, subtitlu. |
-| `ProductCard` | `product` | Imagine, tip, nume, status, `PurchaseButtons`. Link spre pagina produsului doar dacă `hasDetailPage`. |
-| `PurchaseButtons` | `options, productName` | Butoane magazin și WhatsApp cu mesaj localizat, după regulile de status. |
-| `ProductFilters` | `facets, value` | Filtre prin `<fieldset>`/checkbox, sincronizate cu query-ul. Client component în `Suspense`. |
-| `ProductGrid` | `products` | Grilă cu starea „niciun rezultat”. |
-| `ArtGallery` | `artworks, tabs` | Tab-uri Originale/Printuri (ARIA tabs, sincronizate cu `#hash`) și filtre pe tehnică. |
-| `RoleSection` | `role` | Secțiune „Despre mine” cu ancoră. |
-| `ContactLinks` | `contact, social` | Buton WhatsApp, e-mail afișat ca text și link, rețele sociale. |
-| `ComingSoon` | `label?` | Placeholder standard. |
-| `ResponsiveImage` | `mediaKey, sizes, priority?, alt` | `<picture>` AVIF/WebP cu srcset din manifest, width/height (CLS 0). |
-| `JsonLd` | `data` | `<script type="application/ld+json">`. |
-| `Breadcrumbs` | `items` | Navigație vizibilă și JSON-LD BreadcrumbList. |
+
+| Componentă         | Props principale                  | Responsabilitate                                                                                                                                         |
+| ------------------ | --------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `SiteHeader`       | `nav, locale, showName`           | Header fix centrat. La scroll devine bară subțire (IntersectionObserver pe o santinelă, fără listener de scroll).                                        |
+| `NavDropdown`      | `item`                            | Pattern „disclosure”: buton cu `aria-expanded` și `aria-controls`. Se închide la Esc (focus înapoi pe buton), la click în afară și la ieșirea focusului. |
+| `MobileMenu`       | `nav`                             | Hamburger, panou cu acordeoane, focus reținut în panou cât e deschis, scroll-ul paginii blocat.                                                          |
+| `LanguageSwitcher` | `alternates, current`             | Linkuri `hreflang` către aceeași pagină.                                                                                                                 |
+| `SiteFooter`       | `nav, social, legal`              | Nume, linkuri, Instagram, Facebook, ©, limbă, bloc legal.                                                                                                |
+| `Hero`             | `profile.hero, photo`             | Nume, roluri, rânduri cu italic, CTA, foto cu margini estompate.                                                                                         |
+| `HeroShortcuts`    | `items[4]`                        | Cele 4 scurtături cu iconițe SVG inline.                                                                                                                 |
+| `Section`          | `id, eyebrow, title, tone`        | Container de secțiune cu titlu semantic.                                                                                                                 |
+| `UniverseCard`     | `universe`                        | Copertă sau placeholder, titlu, tagline, badge „în curând”, accent.                                                                                      |
+| `BookCover`        | `cover?, title`                   | Coperta sau placeholder-ul „Copertă în curând”.                                                                                                          |
+| `BookDetails`      | `book`                            | An, ISBN, număr în serie, subtitlu.                                                                                                                      |
+| `ProductCard`      | `product`                         | Imagine, tip, nume, status, `PurchaseButtons`. Link spre pagina produsului doar dacă `hasDetailPage`.                                                    |
+| `PurchaseButtons`  | `options, productName`            | Butoane magazin și WhatsApp cu mesaj localizat, după regulile de status.                                                                                 |
+| `ProductFilters`   | `facets, value`                   | Filtre prin `<fieldset>`/checkbox, sincronizate cu query-ul. Client component în `Suspense`.                                                             |
+| `ProductGrid`      | `products`                        | Grilă cu starea „niciun rezultat”.                                                                                                                       |
+| `ArtGallery`       | `artworks, tabs`                  | Tab-uri Originale/Printuri (ARIA tabs, sincronizate cu `#hash`) și filtre pe tehnică.                                                                    |
+| `RoleSection`      | `role`                            | Secțiune „Despre mine” cu ancoră.                                                                                                                        |
+| `ContactLinks`     | `contact, social`                 | Buton WhatsApp, e-mail afișat ca text și link, rețele sociale.                                                                                           |
+| `ComingSoon`       | `label?`                          | Placeholder standard.                                                                                                                                    |
+| `ResponsiveImage`  | `mediaKey, sizes, priority?, alt` | `<picture>` AVIF/WebP cu srcset din manifest, width/height (CLS 0).                                                                                      |
+| `JsonLd`           | `data`                            | `<script type="application/ld+json">`.                                                                                                                   |
+| `Breadcrumbs`      | `items`                           | Navigație vizibilă și JSON-LD BreadcrumbList.                                                                                                            |
 
 ## 8. Imagini (fără Image Optimization de la Next.js)
+
 - **Originalele** se copiază din `reference/` în `media-src/`, care se commit-uie.
-- **Configurarea** e în `media-src/media.config.ts`: cheie, fișier sursă, decupare opțională (de exemplu, fața copertei: `{left: 812, top: 22, width: 765, height: 1122}`), lățimi țintă și poziție.
-- **Scriptul** `scripts/optimize-images.mjs` folosește **sharp** și rulează ca `prebuild`. Generează:
-  - lățimile 400/800/1200/1600 (fără upscale), în AVIF și WebP, în `public/media/`, care e ignorat de git;
-  - `src/generated/media-manifest.json` cu dimensiuni, căi și un placeholder blur mic;
-  - imaginile Open Graph de 1200×630: una implicită (foto și nume pe fundal de acuarelă) și câte una per univers (copertă pe fundalul culorii de accent).
+- **Configurarea** e în `media-src/media.config.ts`: cheie, fișier sursă, decupare opțională (de exemplu, fața copertei: `{left: 812, top: 30, width: 745, height: 1112}`), eliminarea fundalului deschis (fluturele) și lățimile țintă.
+- **Scriptul** `scripts/optimize-images.ts` folosește **sharp** și rulează înainte de `dev`/`build`. Generează:
+  - lățimile din config (fără upscale), în AVIF și WebP, în `public/media/`, care e ignorat de git;
+  - `src/generated/media-manifest.json` cu dimensiuni, lățimi și culoarea dominantă (afișată cât se încarcă imaginea);
+  - imaginea Open Graph implicită de 1200×630 (acuarelă, fluture, portret; fără text, ca să nu depindem de fonturile serverului de build). Cele per univers vin în M2.
 - **Cache:** scriptul sare peste fișierele deja generate și neschimbate.
 - **Alternativa respinsă:** `next-image-export-optimizer` e mai „magic”. Scriptul propriu are ~120 de rânduri, e ușor de înțeles și de schimbat (ADR 0005).
 
 ## 9. Contact fără server
+
 - Link WhatsApp `https://wa.me/<număr>?text=<mesaj codificat>`, cu mesaj localizat din `messages` (de exemplu: „Bună, Ramona! Aș dori să comand: {product}.”).
 - E-mail: link `mailto:` și adresa afișată ca text.
 - Instagram și Facebook.
 - **Fără formular** (ADR 0007). Astfel nu stocăm date personale și nu avem spam de gestionat. Pagina Confidențialitate descrie doar statisticile (fără cookie-uri) și contactul direct.
 
 ## 10. SEO, accesibilitate, performanță
+
 **SEO:**
+
 - Metadata per pagină și limbă prin `generateMetadata`: titlul după modelul `%s · Ramona Nichifor`, descriere, canonical absolut, `alternates.languages` (ro, en, x-default) și Open Graph/Twitter.
 - `sitemap.ts` și `robots.ts` cu `dynamic = 'force-static'`: toate rutele din registru și din date, cu alternativele de limbă.
 - JSON-LD:
@@ -219,6 +235,7 @@ Un link care lipsește nu blochează build-ul. Butonul pur și simplu nu apare, 
 - După lansare, în M6: Google Search Console (proprietate de domeniu prin DNS TXT la Cloudflare), trimiterea sitemap-ului, inspectarea URL-urilor principale, Bing Webmaster (import din GSC), verificarea rezultatului pentru „Ramona Nichifor” după 1–4 săptămâni.
 
 **Accesibilitate (WCAG 2.2 AA):**
+
 - contrast AA;
 - focus vizibil (3 px) care nu e acoperit de header-ul fix (`scroll-padding-top`);
 - ținte de minimum 24×24 px (44 recomandat);
@@ -232,17 +249,21 @@ Un link care lipsește nu blochează build-ul. Butonul pur și simplu nu apare, 
 Verificare cu axe (Playwright + `@axe-core/playwright`) pe toate rutele și manual din tastatură.
 
 **Performanță:**
+
 - JS minim: Server Components implicit, client doar pentru header, meniu, filtre și tab-uri;
 - imaginea LCP (foto din hero) cu `fetchpriority="high"` și AVIF;
 - acuarela cu rezoluție mai mică și `loading="lazy"` în afara hero-ului;
-- fonturi cu `display: swap` și subseturi.
+- fonturi self-hosted, restrânse la caracterele folosite (`scripts/subset-fonts.ts`, din sursele OFL din `fonts-src/`): ~66 KB în total în loc de ~200 KB (fișierele `latin` + `latin-ext` de la Google); doar Cormorant e preîncărcat; `display: swap` + fallback cu metrici ajustate (CLS 0).
+
+Măsurat în M1 (Lighthouse 12, mobil, local): Performance 94, Accessibility 100, Best Practices 100, SEO 100 (cu indexarea activată).
 
 Țintă: Lighthouse mobil ≥ 90 la toate cele 4 categorii.
 
 ## 11. Structura folderelor
+
 ```
-app/                     # doar rutare: [locale]/layout, [locale]/[[...segments]]/page, page.tsx (redirect), not-found, sitemap.ts, robots.ts
 src/
+  app/                   # doar rutare: [locale]/layout, [locale]/[[...segments]]/page (dispecer), global-not-found, sitemap.ts, robots.ts, fonts.ts, icon.svg
   views/                 # o componentă per tip de pagină (HomeView, UniverseView, ProductsView…)
   components/            # layout/ (header, footer, nav), ui/ (butoane, carduri), sections/
   lib/data/              # index.ts (interfață) + local/ (implementare) + types.ts (view-models)
@@ -250,24 +271,29 @@ src/
   lib/seo/               # metadata + builderi JSON-LD
   i18n/                  # config.ts (limbi), request.ts (next-intl)
   styles/                # globals.css, theme.css (tokens)
-  generated/             # media-manifest.json (generat, ignorat de git)
+  generated/             # media-manifest.json + fonts/ (generate, ignorate de git)
+  lib/commerce/          # regulile butoanelor de cumpărare (purchase.ts)
+  lib/navigation.ts      # meniul, generat din registru + date
 content/                 # DATE: profile.ts, series.ts, universes.ts, books.ts, products.ts, artworks.ts, retailers.ts, site.ts, schemas.ts
 messages/                # ro.json, en.json (texte UI)
 media-src/               # imagini originale + media.config.ts
-scripts/                 # optimize-images.mjs, content-check.mjs
-public/                  # _redirects, _headers, favicon; media/ generat
+fonts-src/               # fonturi variabile sursă (OFL) + licențe
+scripts/                 # optimize-images.ts, subset-fonts.ts, content-check.ts
+public/                  # _redirects, _headers, index.html (redirect de rezervă pentru /); media/ generat
 docs/                    # PLAN.md, adr/
 reference/               # prototip, nu intră în build
 tests/                   # e2e + a11y (Playwright)
 ```
 
 ## 12. Căi de migrare
+
 - **(a) Shopify:**
   1. adaug `PurchaseOption.kind = 'internal_checkout'` (`provider: 'shopify'`, `variantId`);
   2. `PurchaseButtons` primește un caz nou, „Adaugă în coș”, prin Shopify Buy Button/Storefront API pe client (merge și pe site static) sau prin checkout Shopify hostat;
   3. produsele pot veni din Storefront API la build: se implementează `getProducts` în `lib/data/shopify/`, iar restul rămâne local.
 
   UI-ul și rutele nu se schimbă.
+
 - **(b) Pagini de produs:** `hasDetailPage: true` pe produsele dorite, ruta `product` în registru și `ProductView`. `generateStaticParams` le include automat, la fel sitemap-ul.
 - **(c) CMS** (de exemplu Sanity, Decap sau Keystatic): schemele Zod devin modelele CMS-ului; se scrie `lib/data/cms/` cu aceeași interfață și se schimbă importul din `lib/data/index.ts`. Rebuild prin webhook pe Cloudflare Pages (deploy hook).
 - **(d) Limbă nouă** (exemplu: `ar`, RTL):
@@ -281,6 +307,7 @@ tests/                   # e2e + a11y (Playwright)
 - **(f) Univers nou:** doar date (o intrare în `universes.ts`, `books.ts` și `products.ts`, plus imaginile în `media-src/`). Meniul, sitemap-ul, rutele și paginile se generează singure.
 
 ## 13. ADR-uri (`docs/adr/`)
+
 0001 Next.js static export + Cloudflare Pages ·
 0002 i18n: next-intl pentru mesaje, registru propriu de rute traduse ·
 0003 Conținut ca date TS + Zod + strat de date ·
@@ -291,7 +318,9 @@ tests/                   # e2e + a11y (Playwright)
 0008 Rute cu slash final, redirect fix pentru `/`, fără detectarea limbii.
 
 ## 14. Milestone-uri
+
 **Definition of Done**, pentru fiecare milestone:
+
 - ambele limbi complete;
 - fără text hardcodat în componente (lint + verificare de review);
 - verificat pe mobil (375 px) și desktop (1440 px);
@@ -302,15 +331,15 @@ tests/                   # e2e + a11y (Playwright)
 - commit-uri Conventional Commits.
 
 - **M1 – Fundația și Acasă** (conform promptului)
-  - [ ] scaffold în folder temporar, mutat în rădăcină; `output: 'export'`, `trailingSlash`, TS strict, ESLint, Prettier, `.gitignore`, `.nvmrc` (24)
-  - [ ] `mockup-annotated.jpeg` mutat în `reference/`; `.DS_Store` ignorat
-  - [ ] i18n (config, mesaje, registru de rute, dispecer, redirect `/`)
-  - [ ] tokens și fonturi
-  - [ ] scheme Zod, conținut real (4 universuri, Fluturele, colecția, rolurile), strat de date, `content:check`
-  - [ ] pipeline de imagini (inclusiv decuparea copertei și a fluturelui)
-  - [ ] header, dropdown-uri, meniu de telefon, footer, comutator de limbă
-  - [ ] pagina Acasă RO și EN, cu metadata, JSON-LD `Person`/`WebSite`, sitemap și robots de bază
-  - [ ] build static, instrucțiuni de rulare locală și primul deploy pe Cloudflare Pages
+  - [x] scaffold în folder temporar, mutat în rădăcină; `output: 'export'`, `trailingSlash`, TS strict, ESLint, Prettier, `.gitignore`, `.nvmrc` (24)
+  - [x] `mockup-annotated.jpeg` mutat în `reference/`; `.DS_Store` ignorat
+  - [x] i18n (config, mesaje, registru de rute, dispecer, redirect `/`)
+  - [x] tokens și fonturi
+  - [x] scheme Zod, conținut real (4 universuri, Fluturele, colecția, rolurile), strat de date, `content:check`
+  - [x] pipeline de imagini (inclusiv decuparea copertei și a fluturelui)
+  - [x] header, dropdown-uri, meniu de telefon, footer, comutator de limbă
+  - [x] pagina Acasă RO și EN, cu metadata, JSON-LD `Person`/`WebSite`, sitemap și robots de bază
+  - [x] build static, instrucțiuni de rulare locală și primul deploy pe Cloudflare Pages
 - **M2 – Universuri și cărți:** șablonul de univers, lista Universuri, Cărți pe public, JSON-LD `Book`/`BookSeries`, OG per univers.
 - **M3 – Produse și Artă:** pagina Produse cu filtre (query), Artă cu tab-uri și filtre, date `Artwork`.
 - **M4 – Despre mine, Contact, 404, Confidențialitate:** plus blocul legal din footer.
@@ -318,6 +347,7 @@ tests/                   # e2e + a11y (Playwright)
 - **M6 – Lansare:** domeniu și DNS, Web Analytics, Search Console, sitemap trimis, checklist post-lansare.
 
 ## 15. Riscuri și întrebări deschise
+
 - **Materiale lipsă** (coperți, linkuri, texte): se lansează cu placeholder-e, iar `content:check` le listează.
 - **Acuarela** are rezoluție mică și e în format portret. Pe desktop lat poate arăta pixelată; trebuie cerută o variantă mare.
 - **Traducerile EN** sunt draft făcut de mine. Titlurile cărților în engleză trebuie confirmate de Ramona.
@@ -329,16 +359,16 @@ tests/                   # e2e + a11y (Playwright)
 - **Imaginea din `mockup-annotated.jpeg` e generată de AI** și nu se folosește ca asset.
 
 ## 16. Materiale de cerut Ramonei
+
 1. Texte finale: bio scurt și lung; cele 4 secțiuni din Despre mine; povestea fiecărui univers; descrieri de produse. Validare pentru textele EN.
 2. Titlurile oficiale în engleză ale celor 4 cărți.
 3. Titulaturile exacte de pe certificatele de consiliere (și ce e permis să se afișeze).
-4. Coperțile celorlalte 3 cărți, când există. Fișierul original, la rezoluție mare, pentru *Fluturele*.
+4. Coperțile celorlalte 3 cărți, când există. Fișierul original, la rezoluție mare, pentru _Fluturele_.
 5. Fluturele ca PNG transparent la rezoluție mare; acuarela de fundal la rezoluție mare, în format peisaj.
 6. Fotografii: portret la rezoluție mare (și alte variante pentru Despre mine); lucrări (originale și printuri, cu titlu, tehnică, dimensiuni, an, status); produse (semne de carte, cărți de joc, joc, cană pe fundal neutru).
 7. Linkuri eMAG și Amazon pentru fiecare ediție, plus alte magazine când apar.
 8. Număr WhatsApp (pentru business), adresă de e-mail, URL-urile de Instagram și Facebook.
-9. Editura și orașul pentru *Fluturele* (coperta: „Bacău 2026”), ediții și ISBN-uri viitoare (EN, e-book, audiobook).
+9. Editura și orașul pentru _Fluturele_ (coperta: „Bacău 2026”), ediții și ISBN-uri viitoare (EN, e-book, audiobook).
 10. Date legale, dacă vinde direct (PFA/SRL, CUI).
 11. Confirmarea culorilor de accent pentru universuri și a numelui din header (da/nu).
 12. Categoriile de tehnică pentru filtrul din Artă.
-
