@@ -1,0 +1,128 @@
+{
+  "meta": {
+    "siteName": "Ramona Nichifor",
+    "homeTitle": "Ramona Nichifor – author, illustrator, entrepreneur",
+    "homeDescription": "Ramona Nichifor – author, illustrator, entrepreneur and personal development counsellor. The “We Are the MAGIC” children’s book series, paintings and illustrations.",
+    "pageTitles": {
+      "about": "About me",
+      "universes": "Universes",
+      "universe": "Universe",
+      "booksByAudience": "Books",
+      "art": "Art",
+      "products": "Products",
+      "contact": "Contact",
+      "privacy": "Privacy"
+    }
+  },
+  "a11y": {
+    "skipToContent": "Skip to content",
+    "mainNav": "Main navigation",
+    "footerNav": "Footer navigation",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu",
+    "languageSwitcher": "Choose language",
+    "homeLink": "Ramona Nichifor, home page",
+    "opensInNewTab": "(opens in a new tab)",
+    "social": "Social media"
+  },
+  "nav": {
+    "home": "Home",
+    "about": "About me",
+    "books": "Books",
+    "universes": "Universes",
+    "allUniverses": "All universes",
+    "art": "Art",
+    "products": "Products",
+    "contact": "Contact",
+    "audience": {
+      "kids": "For children",
+      "teens": "For teenagers",
+      "adults": "For adults"
+    },
+    "artTabs": {
+      "originals": "Originals",
+      "prints": "Prints"
+    }
+  },
+  "common": {
+    "comingSoon": "Coming soon",
+    "coverComingSoon": "Cover coming soon",
+    "imageComingSoon": "Image coming soon",
+    "seriesBook": "Book {number} in the series",
+    "discover": "Discover"
+  },
+  "home": {
+    "shortcutsLabel": "Explore the sections",
+    "universes": {
+      "title": "Stories for little and grown-up souls",
+      "intro": "Every book in the “{series}” series is a universe: a story and a collection of things made with love.",
+      "all": "All universes"
+    },
+    "roles": {
+      "eyebrow": "About me",
+      "title": "Four roles, one story",
+      "more": "Read more"
+    },
+    "art": {
+      "eyebrow": "Art",
+      "title": "When a story becomes an image",
+      "text": "My paintings and illustrations start from colour, emotion and the questions that don’t always need an immediate answer. Original works in acrylic and watercolour, and prints.",
+      "originals": "See the originals",
+      "prints": "See the prints"
+    },
+    "products": {
+      "eyebrow": "The collection",
+      "title": "Books and things made with love",
+      "all": "All products"
+    },
+    "contact": {
+      "eyebrow": "Contact",
+      "title": "Let’s stay in touch",
+      "text": "For books, art and conversations about shared projects.",
+      "cta": "Write to me"
+    }
+  },
+  "product": {
+    "types": {
+      "book": "Printed book",
+      "ebook": "E-book",
+      "audiobook": "Audiobook",
+      "bookmark": "Bookmarks",
+      "card_game": "Playing cards",
+      "family_game": "Family game",
+      "ceramic": "Ceramics",
+      "print": "Print",
+      "original": "Original"
+    },
+    "status": {
+      "available": "Available",
+      "coming_soon": "Coming soon",
+      "made_to_order": "Made to order",
+      "sold": "Sold",
+      "portfolio_only": "Portfolio"
+    },
+    "buyAt": "Buy on {retailer}",
+    "orderByMessage": "Order by message",
+    "askSimilar": "Ask about similar works",
+    "whatsappMessage": "Hello, Ramona! I would like to order: {product}.",
+    "whatsappSimilar": "Hello, Ramona! I would like details about works similar to: {product}.",
+    "emailSubject": "Order: {product}",
+    "universeLabel": "{universe} universe"
+  },
+  "contact": {
+    "whatsapp": "Message me on WhatsApp",
+    "email": "E-mail",
+    "instagram": "Instagram",
+    "facebook": "Facebook",
+    "detailsSoon": "Contact details will be added soon."
+  },
+  "footer": {
+    "rights": "© {year} Ramona Nichifor. All rights reserved.",
+    "language": "Language"
+  },
+  "placeholder": {
+    "title": "Page in progress",
+    "text": "This page is being built and will be available soon.",
+    "back": "Back to the home page"
+  }
+}

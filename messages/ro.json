@@ -1,0 +1,128 @@
+{
+  "meta": {
+    "siteName": "Ramona Nichifor",
+    "homeTitle": "Ramona Nichifor – autor, ilustrator, antreprenor",
+    "homeDescription": "Ramona Nichifor – autor, ilustrator, antreprenor și consilier pentru dezvoltare personală. Seria de cărți pentru copii „Magia suntem noi”, picturi și ilustrații.",
+    "pageTitles": {
+      "about": "Despre mine",
+      "universes": "Universuri",
+      "universe": "Univers",
+      "booksByAudience": "Cărți",
+      "art": "Artă",
+      "products": "Produse",
+      "contact": "Contact",
+      "privacy": "Confidențialitate"
+    }
+  },
+  "a11y": {
+    "skipToContent": "Sari la conținut",
+    "mainNav": "Navigare principală",
+    "footerNav": "Navigare în subsol",
+    "openMenu": "Deschide meniul",
+    "closeMenu": "Închide meniul",
+    "languageSwitcher": "Alege limba",
+    "homeLink": "Ramona Nichifor, pagina principală",
+    "opensInNewTab": "(se deschide într-o filă nouă)",
+    "social": "Rețele sociale"
+  },
+  "nav": {
+    "home": "Acasă",
+    "about": "Despre mine",
+    "books": "Cărți",
+    "universes": "Universuri",
+    "allUniverses": "Toate universurile",
+    "art": "Artă",
+    "products": "Produse",
+    "contact": "Contact",
+    "audience": {
+      "kids": "Pentru copii",
+      "teens": "Pentru adolescenți",
+      "adults": "Pentru adulți"
+    },
+    "artTabs": {
+      "originals": "Originale",
+      "prints": "Printuri"
+    }
+  },
+  "common": {
+    "comingSoon": "În curând",
+    "coverComingSoon": "Copertă în curând",
+    "imageComingSoon": "Imagine în curând",
+    "seriesBook": "Cartea {number} din serie",
+    "discover": "Descoperă"
+  },
+  "home": {
+    "shortcutsLabel": "Descoperă secțiunile",
+    "universes": {
+      "title": "Povești pentru suflete mici și mari",
+      "intro": "Fiecare carte din seria „{series}” este un univers: o poveste și o colecție de lucruri făcute cu drag.",
+      "all": "Toate universurile"
+    },
+    "roles": {
+      "eyebrow": "Despre mine",
+      "title": "Patru roluri, o singură poveste",
+      "more": "Citește mai mult"
+    },
+    "art": {
+      "eyebrow": "Artă",
+      "title": "Când povestea devine imagine",
+      "text": "Picturile și ilustrațiile mele pornesc din culoare, emoție și întrebările care nu au întotdeauna nevoie de răspuns imediat. Lucrări originale, acrilic și acuarelă, și printuri.",
+      "originals": "Vezi originalele",
+      "prints": "Vezi printurile"
+    },
+    "products": {
+      "eyebrow": "Colecția",
+      "title": "Cărți și lucruri făcute cu drag",
+      "all": "Toate produsele"
+    },
+    "contact": {
+      "eyebrow": "Contact",
+      "title": "Să rămânem aproape",
+      "text": "Pentru cărți, artă și conversații despre proiecte comune.",
+      "cta": "Scrie-mi"
+    }
+  },
+  "product": {
+    "types": {
+      "book": "Carte tipărită",
+      "ebook": "E-book",
+      "audiobook": "Audiobook",
+      "bookmark": "Semne de carte",
+      "card_game": "Cărți de joc",
+      "family_game": "Joc de familie",
+      "ceramic": "Ceramică",
+      "print": "Print",
+      "original": "Original"
+    },
+    "status": {
+      "available": "Disponibil",
+      "coming_soon": "În curând",
+      "made_to_order": "La comandă",
+      "sold": "Vândut",
+      "portfolio_only": "Portofoliu"
+    },
+    "buyAt": "Cumpără de pe {retailer}",
+    "orderByMessage": "Comandă prin mesaj",
+    "askSimilar": "Întreabă de lucrări similare",
+    "whatsappMessage": "Bună, Ramona! Aș dori să comand: {product}.",
+    "whatsappSimilar": "Bună, Ramona! Aș dori detalii despre lucrări similare cu: {product}.",
+    "emailSubject": "Comandă: {product}",
+    "universeLabel": "Universul {universe}"
+  },
+  "contact": {
+    "whatsapp": "Scrie-mi pe WhatsApp",
+    "email": "E-mail",
+    "instagram": "Instagram",
+    "facebook": "Facebook",
+    "detailsSoon": "Datele de contact vor fi adăugate în curând."
+  },
+  "footer": {
+    "rights": "© {year} Ramona Nichifor. Toate drepturile rezervate.",
+    "language": "Limba"
+  },
+  "placeholder": {
+    "title": "Pagină în lucru",
+    "text": "Această pagină este în construcție și va fi disponibilă în curând.",
+    "back": "Înapoi la pagina principală"
+  }
+}
