@@ -1,0 +1,65 @@
+@import 'tailwindcss';
+@import './theme.css';
+
+@layer base {
+  :root {
+    /* Height of the sticky header; keeps anchored sections and focus visible below it. */
+    --header-h: 4.25rem;
+    scroll-padding-top: calc(var(--header-h) + 1rem);
+  }
+
+  @media (min-width: 64rem) {
+    :root {
+      --header-h: 7rem;
+    }
+  }
+
+  html {
+    @apply bg-paper text-ink antialiased;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    @apply font-sans text-base leading-relaxed;
+  }
+
+  :focus-visible {
+    outline: 3px solid var(--color-focus);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+/* Small uppercase label above headings. */
+@utility eyebrow {
+  @apply font-display text-eyebrow font-semibold tracking-[0.26em] uppercase;
+}
+
+/* Uppercase spaced text used by the menu and buttons. */
+@utility caps {
+  @apply font-display font-semibold tracking-[0.12em] uppercase;
+}
+
+/* Soft edges on all four sides (hero portrait), like a watercolour vignette. */
+@utility fade-edges {
+  mask-image:
+    linear-gradient(to right, transparent 0%, #000 16%, #000 84%, transparent 100%),
+    linear-gradient(to bottom, transparent 0%, #000 12%, #000 70%, transparent 100%);
+  mask-composite: intersect;
+}
