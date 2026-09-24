@@ -1,0 +1,4 @@
+# Cloudflare Pages redirects (ADR 0008). Static export cannot use next.config redirects.
+/            /ro/                 301
+/ro/carti/   /ro/carti/copii/     301
+/en/books/   /en/books/kids/      301

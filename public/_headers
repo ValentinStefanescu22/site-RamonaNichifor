@@ -1,0 +1,14 @@
+# Cloudflare Pages response headers.
+/*
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(), microphone=(), geolocation=()
+  X-Frame-Options: DENY
+
+# Fingerprinted Next.js assets never change: cache for a year.
+/_next/static/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# Optimized images: cache a week (names don't change when content does).
+/media/*
+  Cache-Control: public, max-age=604800
