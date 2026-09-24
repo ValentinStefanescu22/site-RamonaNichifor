@@ -1,0 +1,45 @@
+{
+  "name": "site-ramona-nichifor",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "predev": "npm run assets",
+    "build": "next build",
+    "prebuild": "npm run assets",
+    "lint": "eslint",
+    "typecheck": "npm run assets && next typegen && tsc --noEmit",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "images": "tsx scripts/optimize-images.ts",
+    "content:check": "tsx scripts/content-check.ts",
+    "preview": "npx --yes serve@14 out",
+    "fonts": "tsx scripts/subset-fonts.ts",
+    "assets": "npm run fonts && npm run images"
+  },
+  "dependencies": {
+    "next": "16.3.6",
+    "next-intl": "^4.14.7",
+    "react": "19.2.8",
+    "react-dom": "19.2.8",
+    "zod": "^4.6.5"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4",
+    "@types/node": "^24.13.6",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^9",
+    "eslint-config-next": "16.3.6",
+    "prettier": "^3.9.9",
+    "prettier-plugin-tailwindcss": "^0.8.1",
+    "sharp": "^0.35.4",
+    "subset-font": "^2.9.0",
+    "tailwindcss": "^4",
+    "tsx": "^4.23.15",
+    "typescript": "^5"
+  },
+  "engines": {
+    "node": ">=24"
+  }
+}

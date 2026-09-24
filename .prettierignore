@@ -1,0 +1,7 @@
+.next
+out
+node_modules
+reference
+public/media
+src/generated
+package-lock.json
